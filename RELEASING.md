@@ -11,14 +11,22 @@ Checklist for [Obsidian community plugins](https://docs.obsidian.md/Plugins/Rele
 
 ## Create a GitHub release
 
-1. Open https://github.com/lemondepat/token-count/releases/new
-2. **Choose a tag**: `1.0.0` (must match `manifest.json` `version`, no `v` prefix).
-3. **Release title**: `1.0.0` (any title is fine; Obsidian uses the tag).
-4. Paste release notes (see below).
-5. **Attach binaries** (required for installation):
-   - `main.js`
-   - `manifest.json`
-6. Publish the release.
+Pushing a git tag matching `manifest.json` `version` triggers [`.github/workflows/release.yml`](.github/workflows/release.yml), which builds the plugin and publishes `main.js` + `manifest.json` automatically.
+
+```bash
+npm run build   # optional local check
+git tag -a 1.0.0 -m "1.0.0"
+git push origin 1.0.0
+```
+
+To re-run after the workflow exists, delete and re-push the tag:
+
+```bash
+git tag -d 1.0.0 && git push origin :refs/tags/1.0.0
+git tag -a 1.0.0 -m "1.0.0" && git push origin 1.0.0
+```
+
+Manual upload (if needed): https://github.com/lemondepat/token-count/releases/new — attach `main.js` and `manifest.json`.
 
 ## First-time community submission
 
