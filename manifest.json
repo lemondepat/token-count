@@ -1,0 +1,9 @@
+{
+	"id": "token-count",
+	"name": "Token Count",
+	"version": "1.0.0",
+	"minAppVersion": "1.0.0",
+	"description": "Show token count for the active note in the status bar.",
+	"author": "Pat",
+	"isDesktopOnly": false
+}
