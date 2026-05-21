@@ -1,6 +1,6 @@
 # Token Count (Obsidian)
 
-Shows the token count for the **active note** in the status bar.
+Shows the token count for the **active note** in the status bar. **Desktop only** (not loaded on Obsidian Mobile).
 
 - **OpenAI models** (`gpt-5`, `gpt-4o`, `gpt-4`): [`gpt-tokenizer`](https://github.com/niieani/gpt-tokenizer)
 - **Claude**: Anthropic `claude.json` ranks + [`js-tiktoken`](https://github.com/dqbd/tiktoken) ([reference implementation](https://gist.github.com/Mearman/85080f34fe75194c664b3d185f462f0e))
