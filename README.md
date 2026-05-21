@@ -2,6 +2,8 @@
 
 Count tokens for the active note in the status bar, using the same tokenizers as popular LLM APIs (GPT, Claude, and Gemini). **Desktop only.**
 
+![Token count in the Obsidian status bar](assets/screenshot.png)
+
 ## Install
 
 ### From Obsidian (recommended)
