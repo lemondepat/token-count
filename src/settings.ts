@@ -1,7 +1,7 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import type TokenCountPlugin from "./main";
 
-export type ModelId = "gpt-5" | "gpt-4o" | "gpt-4";
+export type ModelId = "gpt-5" | "gpt-4o" | "gpt-4" | "claude";
 
 export interface TokenCountSettings {
 	model: ModelId;
@@ -27,12 +27,15 @@ export class TokenCountSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Model")
-			.setDesc("Tokenizer for the selected OpenAI model (via gpt-tokenizer).")
+			.setDesc(
+				"OpenAI models use gpt-tokenizer; Claude uses Anthropic ranks via js-tiktoken.",
+			)
 			.addDropdown((dropdown) =>
 				dropdown
 					.addOption("gpt-5", "gpt-5")
 					.addOption("gpt-4o", "gpt-4o")
 					.addOption("gpt-4", "gpt-4")
+					.addOption("claude", "claude")
 					.setValue(this.plugin.settings.model)
 					.onChange(async (value) => {
 						this.plugin.settings.model = value as ModelId;

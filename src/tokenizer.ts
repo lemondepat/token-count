@@ -1,14 +1,16 @@
+import { countClaudeTokens } from "./claudeTokenizer";
 import { encode as encodeGpt4 } from "gpt-tokenizer/model/gpt-4";
 import { encode as encodeGpt4o } from "gpt-tokenizer/model/gpt-4o";
 import { encode as encodeGpt5 } from "gpt-tokenizer/model/gpt-5";
 import type { ModelId } from "./settings";
 
-type EncodeFn = (text: string) => number[];
+type CountFn = (text: string) => number;
 
-const ENCODERS: Record<ModelId, EncodeFn> = {
-	"gpt-5": encodeGpt5,
-	"gpt-4o": encodeGpt4o,
-	"gpt-4": encodeGpt4,
+const COUNTERS: Record<ModelId, CountFn> = {
+	"gpt-5": (text) => encodeGpt5(text).length,
+	"gpt-4o": (text) => encodeGpt4o(text).length,
+	"gpt-4": (text) => encodeGpt4(text).length,
+	claude: countClaudeTokens,
 };
 
 export class Tokenizer {
@@ -20,6 +22,6 @@ export class Tokenizer {
 
 	count(text: string): number {
 		if (!text) return 0;
-		return ENCODERS[this.model](text).length;
+		return COUNTERS[this.model](text);
 	}
 }
