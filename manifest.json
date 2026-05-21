@@ -3,7 +3,8 @@
 	"name": "Token Count",
 	"version": "1.0.0",
 	"minAppVersion": "1.0.0",
-	"description": "Show token count for the active note in the status bar.",
+	"description": "Count tokens for the active note in the status bar (GPT, Claude, Gemini).",
 	"author": "Pat",
+	"authorUrl": "https://github.com/lemondepat",
 	"isDesktopOnly": true
 }

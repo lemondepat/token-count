@@ -6,7 +6,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production"
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"prepublishOnly": "npm run build"
 	},
 	"keywords": [],
 	"license": "MIT",
@@ -19,6 +20,7 @@
 	},
 	"dependencies": {
 		"@anthropic-ai/tokenizer": "^0.0.4",
+		"@google/genai": "^2.5.0",
 		"gpt-tokenizer": "^3.4.0",
 		"js-tiktoken": "^1.0.21"
 	}

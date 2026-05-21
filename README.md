@@ -1,36 +1,32 @@
-# Token Count (Obsidian)
+# Token Count
 
-Shows the token count for the **active note** in the status bar. **Desktop only** (not loaded on Obsidian Mobile).
+Count tokens for the active note in the status bar, using the same tokenizers as popular LLM APIs (GPT, Claude, and Gemini). **Desktop only.**
 
-- **OpenAI models** (`gpt-5`, `gpt-4o`, `gpt-4`): [`gpt-tokenizer`](https://github.com/niieani/gpt-tokenizer)
-- **Claude**: Anthropic `claude.json` ranks + [`js-tiktoken`](https://github.com/dqbd/tiktoken) ([reference implementation](https://gist.github.com/Mearman/85080f34fe75194c664b3d185f462f0e))
+## Install
 
-## Development setup
+### From Obsidian (recommended)
 
-1. Install dependencies and build:
+1. Open **Settings → Community plugins**.
+2. Turn on **Community plugins** and **Browse**.
+3. Search for **Token Count** and install.
+4. Enable the plugin.
 
-```bash
-npm install
-npm run build
-```
+### Manual install
 
-2. Link or copy this folder into your vault’s plugins directory:
+1. Download `main.js` and `manifest.json` from the [latest GitHub release](https://github.com/lemondepat/token-count/releases/latest).
+2. Create a folder in your vault: `.obsidian/plugins/token-count/`
+3. Copy both files into that folder.
+4. Enable **Token Count** under **Settings → Community plugins**.
+
+## Usage
+
+Open any Markdown note. The status bar shows the token count for the full note, for example:
 
 ```text
-<Vault>/.obsidian/plugins/token-count/
+1,234 tokens · gpt-5
 ```
 
-Required files: `main.js`, `manifest.json` (optional: `styles.css`).
-
-3. In Obsidian, enable **Token Count** under **Settings → Community plugins**.
-
-For development:
-
-```bash
-npm run dev
-```
-
-Symlink the project into the plugins folder; saving source files rebuilds `main.js` automatically.
+The count updates as you edit. It appears after Obsidian’s built-in word and character count when the core **Word count** plugin is enabled.
 
 ## Settings
 
@@ -38,17 +34,29 @@ Symlink the project into the plugins folder; saving source files rebuilds `main.
 
 | Option | Description |
 |--------|-------------|
-| Model | `gpt-5`, `gpt-4o`, `gpt-4`, or `claude` |
-| Show model in status bar | Append the model name after the token count |
+| Model | `gpt-5`, `gpt-4o`, `gpt-4`, `claude`, or `gemini` |
+| Show model in status bar | Show the model name after the count (e.g. `· gpt-5`) |
 
 ## Notes
 
-- Counts the **full editor content** (including YAML frontmatter). This usually matches what you send to an LLM; add system prompts or wrappers yourself if needed.
-- Claude counts apply **NFKC normalization** and allow special tokens (`encode(..., "all")`), matching [`@anthropic-ai/tokenizer`](https://www.npmjs.com/package/@anthropic-ai/tokenizer).
-- The status bar item is empty when no Markdown view is active.
-- The item is placed **right after** Obsidian’s built-in word and character count (requires the core **Word count** plugin).
-- `main.js` bundles all encodings (~4+ MB with Claude ranks included).
+- Counts the **entire editor content**, including YAML frontmatter.
+- Useful for estimating how much of a note fits in an LLM context window; system prompts or chat wrappers are not included.
+- **Gemini**: the first count may download a vocabulary file once (requires network).
+- Empty when no Markdown editor is active.
+
+## Development
+
+Requires Node.js 18+.
+
+```bash
+npm install
+npm run build
+```
+
+Symlink or copy this repo into `<Vault>/.obsidian/plugins/token-count/` for local testing. Use `npm run dev` to rebuild on save.
+
+See [RELEASING.md](RELEASING.md) for publishing a new version.
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).

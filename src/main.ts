@@ -1,6 +1,7 @@
 import { MarkdownView, Plugin } from "obsidian";
 import {
 	DEFAULT_SETTINGS,
+	normalizeModelId,
 	TokenCountSettingTab,
 	type TokenCountSettings,
 } from "./settings";
@@ -36,7 +37,7 @@ export default class TokenCountPlugin extends Plugin {
 
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", () => {
-				this.updateTokenCount();
+				void this.updateTokenCount();
 			}),
 		);
 
@@ -53,7 +54,7 @@ export default class TokenCountPlugin extends Plugin {
 		);
 
 		this.addSettingTab(new TokenCountSettingTab(this.app, this));
-		this.updateTokenCount();
+		void this.updateTokenCount();
 	}
 
 	onunload() {
@@ -72,11 +73,11 @@ export default class TokenCountPlugin extends Plugin {
 	private scheduleUpdate(): void {
 		if (this.debounceTimer) window.clearTimeout(this.debounceTimer);
 		this.debounceTimer = window.setTimeout(() => {
-			this.updateTokenCount();
+			void this.updateTokenCount();
 		}, DEBOUNCE_MS);
 	}
 
-	updateTokenCount(): void {
+	async updateTokenCount(): Promise<void> {
 		if (!this.statusBarEl || !this.tokenizer) return;
 
 		const view = this.app.workspace.getActiveViewOfType(MarkdownView);
@@ -86,7 +87,7 @@ export default class TokenCountPlugin extends Plugin {
 		}
 
 		const text = view.editor.getValue();
-		const count = this.tokenizer.count(text);
+		const count = await this.tokenizer.count(text);
 		const formatted = count.toLocaleString();
 		const label = this.settings.showModelLabel
 			? ` · ${this.settings.model}`
@@ -95,11 +96,17 @@ export default class TokenCountPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		this.settings = Object.assign(
-			{},
-			DEFAULT_SETTINGS,
-			await this.loadData(),
-		);
+		const data = (await this.loadData()) as Partial<TokenCountSettings> & {
+			model?: string;
+		};
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
+		if (data.model) {
+			const normalized = normalizeModelId(data.model);
+			if (normalized !== this.settings.model) {
+				this.settings.model = normalized;
+				await this.saveSettings();
+			}
+		}
 	}
 
 	async saveSettings() {
