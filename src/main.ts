@@ -96,11 +96,12 @@ export default class TokenCountPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		const data = (await this.loadData()) as Partial<TokenCountSettings> & {
+		const raw = await this.loadData();
+		const data = (raw ?? {}) as Partial<TokenCountSettings> & {
 			model?: string;
 		};
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
-		if (data.model) {
+		if (typeof data.model === "string") {
 			const normalized = normalizeModelId(data.model);
 			if (normalized !== this.settings.model) {
 				this.settings.model = normalized;

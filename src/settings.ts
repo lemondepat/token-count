@@ -13,10 +13,19 @@ const LEGACY_GEMINI_MODELS = new Set([
 	"gemini-3.5-flash",
 ]);
 
+const VALID_MODELS = new Set<ModelId>([
+	"gpt-5",
+	"gpt-4o",
+	"gpt-4",
+	"claude",
+	"gemini",
+]);
+
 /** Migrate saved settings from older Gemini-specific model ids. */
 export function normalizeModelId(model: string): ModelId {
 	if (LEGACY_GEMINI_MODELS.has(model)) return "gemini";
-	return model as ModelId;
+	if (VALID_MODELS.has(model as ModelId)) return model as ModelId;
+	return DEFAULT_SETTINGS.model;
 }
 
 export interface TokenCountSettings {
