@@ -1,4 +1,5 @@
 import { MarkdownView, Plugin } from "obsidian";
+import { getTokenWord } from "./i18n";
 import {
 	DEFAULT_SETTINGS,
 	normalizeModelId,
@@ -92,7 +93,7 @@ export default class TokenCountPlugin extends Plugin {
 		const label = this.settings.showModelLabel
 			? ` · ${this.settings.model}`
 			: "";
-		this.statusBarEl.setText(`${formatted} tokens${label}`);
+		this.statusBarEl.setText(`${formatted} ${getTokenWord(count)}${label}`);
 	}
 
 	async loadSettings() {

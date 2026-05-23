@@ -35,7 +35,7 @@ export interface TokenCountSettings {
 
 export const DEFAULT_SETTINGS: TokenCountSettings = {
 	model: "gpt-5",
-	showModelLabel: true,
+	showModelLabel: false,
 };
 
 export class TokenCountSettingTab extends PluginSettingTab {
