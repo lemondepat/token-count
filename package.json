@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-token-count",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Obsidian plugin: token count for the active note",
 	"main": "main.js",
 	"type": "module",

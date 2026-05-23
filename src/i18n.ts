@@ -6,8 +6,9 @@ type TokenFn = (count: number) => string;
 const TOKEN_WORDS: Record<string, TokenFn> = {
 	en: (n) => (n === 1 ? "token" : "tokens"),
 	de: (n) => (n === 1 ? "Token" : "Tokens"),
-	// East Asian — no grammatical plural
-	zh: () => "词元",
+	// East Asian — measure word + noun, no grammatical plural
+	zh: () => "个词元",
+	"zh-tw": () => "個詞元",
 	ja: () => "トークン",
 	ko: () => "토큰",
 	// Slavic plural rules

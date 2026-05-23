@@ -1,7 +1,7 @@
 {
 	"id": "token-count",
 	"name": "Token Count",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"minAppVersion": "1.0.0",
 	"description": "Count tokens for the active note in the status bar (GPT, Claude, Gemini).",
 	"author": "Pat",
